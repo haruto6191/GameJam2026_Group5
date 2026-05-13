@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - DeathArea
   - EnemyAttack
+  - PlayerAttack
+  - Item
   layers:
   - Default
   - TransparentFX
