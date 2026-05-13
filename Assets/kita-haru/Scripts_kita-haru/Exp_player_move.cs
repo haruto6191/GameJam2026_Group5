@@ -31,36 +31,4 @@ public class Exp_player_move : MonoBehaviour
     {
         rb.linearVelocity = new Vector2(movement_X * move_speed, rb.linearVelocityY); //22で取得した結果を反映、aを入力していたら左に動く
     }
-
-    //以下、地面に触れているか等のプログラム、まだ使えないので気にせず
-/*
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            ground = true;
-        }
-
-        if (collision.gameObject.tag == "Death_Zone")
-        {
-            Death();
-        }
-    }
-
-    void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            ground = true;
-        }
-    }
-
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            ground = false;
-        }
-    }
-*/
 }
