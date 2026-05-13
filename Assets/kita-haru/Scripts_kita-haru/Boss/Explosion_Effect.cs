@@ -3,7 +3,7 @@ using UnityEngine;
 public class Explosion_Effect : MonoBehaviour
 {
     [SerializeField]
-    float disappear, dis_speed;
+    float dis_speed;
 
     private Color color;
     private SpriteRenderer sprite;
@@ -13,19 +13,16 @@ public class Explosion_Effect : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
 
         color = sprite.color;
-
-        Destroy(gameObject, disappear); //n•bŒã‚É©“®Á–Å
     }
 
     void FixedUpdate()
     {
         color.a -= Time.deltaTime * dis_speed;
         sprite.color = color; //“§–¾‚É‚·‚é‚¾‚¯‚ÌƒvƒƒOƒ‰ƒ€
-        /*
-        if(color.a < 0.33f)
+
+        if(color.a <= 0)
         {
-        //”»’èÁ‚µ‚Ä‚Ë
+            Destroy(gameObject);
         }
-        */
     }
 }

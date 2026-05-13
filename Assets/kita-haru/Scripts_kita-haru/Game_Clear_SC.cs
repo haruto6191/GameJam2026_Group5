@@ -8,6 +8,8 @@ public class Game_Clear_SC : MonoBehaviour
     [SerializeField] GameObject Hidden_Can, GC_text, GC_Can, title_bt;
     [SerializeField] Text sc_text, plus_ef, plus_txt;
 
+    [SerializeField] int Increase;
+
     private string[] general_str = {"TIME","COIN","LIFE"};
     private int[] general_data = new int[3];
 
@@ -18,7 +20,7 @@ public class Game_Clear_SC : MonoBehaviour
         //for文で回しやすくするため、配列にそれぞれの値を格納
         general_data[0] = (int)UI_General.instance.game_time * 10;
         general_data[1] = UI_General.instance.coin * 10;
-        general_data[2] = UI_General.instance.life * 100;
+        general_data[2] = UI_General.instance.life * 1000;
 
         //以下のコルーチンスタート
         StartCoroutine(GameClearCoroutine());
@@ -51,10 +53,17 @@ public class Game_Clear_SC : MonoBehaviour
 
             yield return new WaitForSecondsRealtime(1.5f);
 
-            plus_ef.gameObject.SetActive(false);
 
+            int k = UI_General.instance.score;
             UI_General.instance.score += general_data[i];
-            sc_text.text = UI_General.instance.score.ToString("D6");
+            while (k < UI_General.instance.score)
+            {
+                k += Increase;
+                sc_text.text = k.ToString("D6");
+                yield return new WaitForSecondsRealtime(0.01f);
+            }
+
+            plus_ef.gameObject.SetActive(false);
 
             yield return new WaitForSecondsRealtime(1.0f);
         }
