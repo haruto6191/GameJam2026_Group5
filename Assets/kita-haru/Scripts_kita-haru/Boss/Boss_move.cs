@@ -92,11 +92,6 @@ public class Boss_move : MonoBehaviour
                     break;
             }
         }
-
-        if(Boss_HP <= 0) //ボスのHP(仮)が0以下でゲームクリア
-        {
-            Game_Clear.GameClear(); //Game_Clearというスクリプト参照
-        }
     }
     
     void Collision_Prevention(GameObject obj)
@@ -167,6 +162,27 @@ public class Boss_move : MonoBehaviour
             Collision_Prevention(bomb);
 
             yield return new WaitForSeconds(0.15f);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collider2D)
+    {
+        if (collider2D.gameObject.tag == "PlayerAttack")
+        {
+            TakeDamage(20);
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        Boss_HP -= damage;
+        Boss_HP = Mathf.Clamp(Boss_HP, 0, Boss_maxHP);
+
+        HP_slider.value = Boss_HP;
+
+        if (Boss_HP <= 0) //ボスのHP(仮)が0以下でゲームクリア
+        {
+            Game_Clear.GameClear(); //Game_Clearというスクリプト参照
         }
     }
 

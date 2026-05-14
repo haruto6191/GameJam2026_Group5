@@ -58,7 +58,7 @@ public class Base_EnemyHP_Sys : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider2D)
     {
-        if (collider2D.gameObject.tag == "EnemyAttack") // <- PlayerAttackに変更な
+        if (collider2D.gameObject.tag == "PlayerAttack")
         {
             TakeDamage(20);
         }
@@ -74,5 +74,4 @@ public class Base_EnemyHP_Sys : MonoBehaviour
 
         //敵のプログラムの方でもOnDisable()で行動をリセット
     }
-
 }

@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class Fireworks_move : MonoBehaviour
 {
-    [SerializeField]
-    float start_tra,tracking_time, disappear, speed;
+    public float start_tra,tracking_time, disappear, speed, size = 1;
 
     [SerializeField]
     GameObject bomb;
@@ -51,6 +50,7 @@ public class Fireworks_move : MonoBehaviour
     //破壊時に爆破エフェクトを生成
     void OnDestroy()
     {
-        Instantiate(bomb, transform.position, Quaternion.identity);
+        var b = Instantiate(bomb, transform.position, Quaternion.identity);
+        b.transform.localScale = b.transform.localScale * size;
     }
 }
