@@ -1,0 +1,12 @@
+skeleton.png
+size:256,128
+filter:Linear,Linear
+Coin
+bounds:2,2,81,100
+offsets:11,0,100,100
+Coin2
+bounds:168,2,13,100
+offsets:47,0,100,100
+Coin3
+bounds:85,2,81,100
+offsets:11,0,100,100

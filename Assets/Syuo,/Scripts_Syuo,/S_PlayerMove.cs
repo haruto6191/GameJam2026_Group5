@@ -40,8 +40,10 @@ public class S_PlayerMove : MonoBehaviour
 
     [SerializeField] private GameObject mainCamera;//むりやりカメラ追従
     [SerializeField] private bool isSecondJumpEnabled = true;//二段ジャンプが有効かどうか
-    [SerializeField] private Transform reaf;//リーフのTransformへの参照
+    //[SerializeField] private Transform reaf;//リーフのTransformへの参照
 
+
+    private bool isSquat;//しゃがみ状態かどうか
     /*
     [SerializeField] private GameObject bg;
     private float bgXPos;
@@ -125,6 +127,23 @@ public class S_PlayerMove : MonoBehaviour
             moveData.xSpeed = 0;//横移動の速度を0にする
             isIdle = true;//アイドル状態にする
 
+
+            if(Input.GetKey(KeyCode.S))//Sキーを押したとき
+            {
+                if(!isSquat)//しゃがみ状態でないとき
+                {
+                    isSquat = true;//しゃがみ状態にする
+                    playerAnimSystem.SquatAnim();//しゃがみアニメーションを再生する
+                }
+           
+            }
+            else if (isSquat)
+            {
+                isSquat = false;
+                playerAnimSystem.EmptyAnim();//アニメーションをリセットする
+                playerAnimSystem.currentAnimState = S_PlayerAnimSystem.PlayerAnimState.Idle;//アニメーション状態をIdleにする
+            }
+
         }
 
         if (moveData.isLeft && updateAnimation)//左向きのとき
@@ -132,14 +151,14 @@ public class S_PlayerMove : MonoBehaviour
             transform.localScale = new Vector3(-size, size, 1);//プレイヤーを反転させる
             mainCamera.transform.localPosition = new Vector3(-30, 27, -10);//カメラを反転させる
             //bg.transform.localPosition = new Vector3(-bgXPos, bgYPos, 0);//背景を反転させる
-            reaf.localScale = new Vector3(-1, 1, 1);//リーフを反転させる
+            //reaf.localScale = new Vector3(-1, 1, 1);//リーフを反転させる
         }
         else if (!moveData.isLeft && updateAnimation)//右向きのとき
         {
             transform.localScale = new Vector3(size, size, 1);//プレイヤーを元に戻す
             mainCamera.transform.localPosition = new Vector3(30, 27, -10);//カメラを反転させる
             //bg.transform.localPosition = new Vector3(bgXPos, bgYPos, 0);//背景を反転させる
-            reaf.localScale = new Vector3(1, 1, 1);//リーフを元に戻す
+            //reaf.localScale = new Vector3(1, 1, 1);//リーフを元に戻す
         }
 
         if(isIdle && moveData.xSpeed != 0)

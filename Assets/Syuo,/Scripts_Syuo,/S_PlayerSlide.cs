@@ -41,7 +41,7 @@ public class S_PlayerSlide : MonoBehaviour
         float _slideSpeed = slideSpeed;//スライドの速度を格納する変数 
         while (_slideSpeed > 0)
         {
-            Debug.Log("スライドの速度: " + _slideSpeed);//スライドの速度をデバッグログに出力する
+            //Debug.Log("スライドの速度: " + _slideSpeed);//スライドの速度をデバッグログに出力する
             _slideSpeed -= Time.deltaTime * attenuationSlide;//スライドの速度を減少させる
             rb.linearVelocity = new Vector2(_slideSpeed * transform.localScale.x, rb.linearVelocity.y);//スライドの速度を設定する
             yield return null;//次のフレームまで待つ

@@ -1,6 +1,7 @@
 using UnityEngine;
 using Spine;
 using Spine.Unity;
+using System.Collections;
 
 public class S_PlayerAnimSystem : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class S_PlayerAnimSystem : MonoBehaviour
         Jump,
         Slide,
         FallenDown,
-        TakeDamage
+        TakeDamage,
+        Squat
     }
 
     public PlayerAnimState currentAnimState = PlayerAnimState.Idle;//現在のアニメーション状態を保持する変数
@@ -20,7 +22,12 @@ public class S_PlayerAnimSystem : MonoBehaviour
     private Skeleton skeleton;
     private SkeletonData skelData;
 
+
+    [SerializeField] private GameObject slash;
     //[SerializeField] private ParticleSystem attackEffect;//攻撃エフェクトのParticleSystemへの参照
+
+    [SerializeField] private float slashDuration = 0.5f;//攻撃エフェクトの持続時間
+    [SerializeField] private float slashSpeed = 0.1f;//攻撃エフェクトの移動速度
 
     private void Start()
     {
@@ -97,6 +104,18 @@ public class S_PlayerAnimSystem : MonoBehaviour
         }
     }
 
+    public void SquatAnim()//しゃがみアニメーションを再生するメソッド
+    {
+        if (currentAnimState == PlayerAnimState.Slide || currentAnimState == PlayerAnimState.FallenDown
+            || currentAnimState == PlayerAnimState.Jump)//現在のアニメーション状態がSlide、FallenDown、Jumpのいずれかの場合
+            return;//ダッシュアニメーションを再生せずに終了
+        if (currentAnimState != PlayerAnimState.Squat)//現在のアニメーション状態がSquatでない場合
+        {
+            currentAnimState = PlayerAnimState.Squat;//アニメーション状態をSquatに変更
+            skelAnim.AnimationState.SetAnimation(1, "Squat", false);//1トラックにSquatアニメーションを再生
+        }
+    }
+
     public void AttackAnim()//攻撃アニメーションを再生するメソッド
     {
         if(currentAnimState == PlayerAnimState.Slide || currentAnimState == PlayerAnimState.FallenDown )
@@ -120,12 +139,47 @@ public class S_PlayerAnimSystem : MonoBehaviour
     {
         Debug.Log("Spine Event: " + e.Data.Name);//イベントの名前をログに出力
 
-        if (e.Data.Name == "AttackIEvent")//イベントの名前が"AttackEffect"の場合
+        if (e.Data.Name == "AttackIEvent" && currentAnimState == PlayerAnimState.Squat)//イベントの名前が"AttackEffect"の場合
         {
+            GameObject _slash = Instantiate(slash, transform.position, Quaternion.identity);//攻撃エフェクトのプレハブを生成
+            bool isLeft = transform.localScale.x < 0;//プレイヤーの向きが左かどうかを判定
+            if (transform.localScale.x < 0)//プレイヤーの向きが左の場合
+            {
+                _slash.transform.localScale = new Vector3(-1, 1, 1);//攻撃エフェクトの向きを反転
+            }
+            StartCoroutine(SlashCourtine(_slash,isLeft));
 
-            Debug.Log("AttackEffect Event Triggered!");//攻撃エフェクトイベントがトリガーされたことをログに出力
-            //attackEffect.Play();//攻撃エフェクトのParticleSystemを再生
         }
     }
+
+    private IEnumerator SlashCourtine(GameObject sl,bool isLeft)
+    {
+        sl.transform.position = new Vector3(sl.transform.position.x, sl.transform.position.y + 0.8f, sl.transform.position.z);
+        //攻撃エフェクトの位置をプレイヤーの位置から少し上にずらす
+
+        float time = 0f;//経過時間を格納する変数
+        while (time < slashDuration)
+        {
+            time += Time.deltaTime;//経過時間を更新
+
+            float currentSpeed = slashSpeed * Time.deltaTime;//攻撃エフェクトの移動速度をフレームレートに依存しないようにするために、Time.deltaTimeを掛ける
+
+            if (isLeft)//プレイヤーの向きが左の場合
+            {
+                sl.transform.position += new Vector3(-currentSpeed, 0, 0);//攻撃エフェクトを左に移動
+            }
+            else//プレイヤーの向きが右の場合
+            {
+                sl.transform.position += new Vector3(currentSpeed, 0, 0);//攻撃エフェクトを右に移動
+            }
+
+            Debug.Log("攻撃エフェクトの位置: " + sl.transform.position);//攻撃エフェクトの位置をログに出力
+            yield return null;//次のフレームまで待つ
+        }
+
+        Debug.Log("攻撃エフェクトを破壊します。");//攻撃エフェクトを破壊する前にログを出力
+        Destroy(sl);//攻撃エフェクトを破壊する
+    }
+
 
 }
