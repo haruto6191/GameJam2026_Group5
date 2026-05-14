@@ -40,6 +40,13 @@ public class S_PlayerMove : MonoBehaviour
 
     [SerializeField] private GameObject mainCamera;//むりやりカメラ追従
     [SerializeField] private bool isSecondJumpEnabled = true;//二段ジャンプが有効かどうか
+    [SerializeField] private Transform reaf;//リーフのTransformへの参照
+
+    /*
+    [SerializeField] private GameObject bg;
+    private float bgXPos;
+    private float bgYPos;
+    */
 
     void Start()
     {
@@ -60,6 +67,9 @@ public class S_PlayerMove : MonoBehaviour
 
         dashEffectR.SetActive(false);//ダッシュエフェクトを非表示にする
         dashEffectL.SetActive(false);//ダッシュエフェクトを非表示にする
+
+           // bgXPos = bg.transform.localPosition.x;//背景のX座標を取得する
+           // bgYPos = bg.transform.localPosition.y;//背景のY座標を取得する
     }
 
     private void Update()
@@ -121,11 +131,15 @@ public class S_PlayerMove : MonoBehaviour
         {
             transform.localScale = new Vector3(-size, size, 1);//プレイヤーを反転させる
             mainCamera.transform.localPosition = new Vector3(-30, 27, -10);//カメラを反転させる
+            //bg.transform.localPosition = new Vector3(-bgXPos, bgYPos, 0);//背景を反転させる
+            reaf.localScale = new Vector3(-1, 1, 1);//リーフを反転させる
         }
         else if (!moveData.isLeft && updateAnimation)//右向きのとき
         {
             transform.localScale = new Vector3(size, size, 1);//プレイヤーを元に戻す
             mainCamera.transform.localPosition = new Vector3(30, 27, -10);//カメラを反転させる
+            //bg.transform.localPosition = new Vector3(bgXPos, bgYPos, 0);//背景を反転させる
+            reaf.localScale = new Vector3(1, 1, 1);//リーフを元に戻す
         }
 
         if(isIdle && moveData.xSpeed != 0)
