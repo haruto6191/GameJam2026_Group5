@@ -4,6 +4,21 @@ using Spine.Unity;
 
 public class S_PlayerMove : MonoBehaviour
 {
+    public static S_PlayerMove instance;//シングルトンパターンのインスタンスを格納する変数
+
+    private void Awake()
+    {
+        if (instance == null)//インスタンスが存在しないとき
+        {
+            instance = this;//このクラスのインスタンスを格納する
+        }
+        else
+        {
+            Destroy(gameObject);//このクラスのインスタンスを破壊する
+        }
+    }
+    
+
     private Rigidbody2D rb;
 
     [System.Serializable]
@@ -26,9 +41,11 @@ public class S_PlayerMove : MonoBehaviour
     [SerializeField] private Transform groundCheck; // 足元に配置する空のオブジェクト
     [SerializeField] private float groundCheckRadius = 0.2f; // 判定の半径
     [SerializeField] private LayerMask floorLayer; // Inspectorで「Floor」レイヤーを指定
+    [SerializeField] private LayerMask specialFloorLayer;
     private float jumpTimeCounter;//ジャンプの時間をカウントする変数
     public bool isJump;//ジャンプ状態（上昇終了または落下中）かどうか
     public bool isGrounded;//地面に接地しているかどうか
+    public bool isSpecialFloor;
     private bool canDoubleJump;//二段ジャンプ（空中ジャンプ）ができるかどうか
 
     public bool isSlide;//スライド状態かどうか
@@ -72,11 +89,13 @@ public class S_PlayerMove : MonoBehaviour
 
            // bgXPos = bg.transform.localPosition.x;//背景のX座標を取得する
            // bgYPos = bg.transform.localPosition.y;//背景のY座標を取得する
+
+        isSpecialFloor = false;
     }
 
     private void Update()
     {
-        if(isSlide)
+        if (isSlide)
             return;//スライド状態のときは移動処理を行わない
 
         //----------------------------------------------------[横移動処理]----------------------------------------------------------
@@ -91,9 +110,9 @@ public class S_PlayerMove : MonoBehaviour
             moveData.xSpeed = -moveData.mainSpeedX;//横移動の速度を負にする
             playerAnimSystem.DashAnim();//ダッシュアニメーションを再生する  
 
-            
-            
-            
+
+
+
             if (!dashEffectR.activeSelf)//右向きのとき
             {
                 dashEffectR.SetActive(true);//ダッシュエフェクトを表示する
@@ -118,7 +137,7 @@ public class S_PlayerMove : MonoBehaviour
         }
         else
         {
-            if(!isIdle)//アイドル状態でないとき
+            if (!isIdle)//アイドル状態でないとき
             {
                 playerAnimSystem.IdleAnim();//アイドルアニメーションを再生する
                 dashEffectL.SetActive(false);//ダッシュエフェクトを非表示にする
@@ -128,14 +147,14 @@ public class S_PlayerMove : MonoBehaviour
             isIdle = true;//アイドル状態にする
 
 
-            if(Input.GetKey(KeyCode.S))//Sキーを押したとき
+            if (Input.GetKey(KeyCode.S))//Sキーを押したとき
             {
-                if(!isSquat)//しゃがみ状態でないとき
+                if (!isSquat)//しゃがみ状態でないとき
                 {
                     isSquat = true;//しゃがみ状態にする
                     playerAnimSystem.SquatAnim();//しゃがみアニメーションを再生する
                 }
-           
+
             }
             else if (isSquat)
             {
@@ -161,7 +180,7 @@ public class S_PlayerMove : MonoBehaviour
             //reaf.localScale = new Vector3(1, 1, 1);//リーフを元に戻す
         }
 
-        if(isIdle && moveData.xSpeed != 0)
+        if (isIdle && moveData.xSpeed != 0)
         {
             isIdle = false;//アイドル状態を解除する
         }
@@ -171,11 +190,14 @@ public class S_PlayerMove : MonoBehaviour
         //----------------------------------------------------[縦移動処理]----------------------------------------------------------
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, floorLayer);//地面に接地しているかどうかを判定する
+        isSpecialFloor = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, specialFloorLayer);
 
         // 接地しているときの初期化処理
-        if (isGrounded)
+        if (isGrounded || isSpecialFloor)
         {
-            moveData.ySpeed = 0; // 縦速度をリセットする
+            if (!isSpecialFloor)
+                moveData.ySpeed = 0; // 縦速度をリセットする
+
             jumpTimeCounter = 0;
             isJump = false;
             canDoubleJump = true; // 空中ジャンプ権を回復する
@@ -185,11 +207,11 @@ public class S_PlayerMove : MonoBehaviour
                 playerAnimSystem.currentAnimState = S_PlayerAnimSystem.PlayerAnimState.Idle; // アニメーション状態をIdleにする
                 playerAnimSystem.EmptyAnim(); // アニメーションをリセットする
             }
-                
+
         }
         else
         {
-            if(dashEffectL.activeSelf || dashEffectR.activeSelf)//空中にいるとき
+            if (dashEffectL.activeSelf || dashEffectR.activeSelf)//空中にいるとき
             {
                 dashEffectL.SetActive(false);//ダッシュエフェクトを非表示にする
                 dashEffectR.SetActive(false);//ダッシュエフェクトを非表示にする
@@ -197,39 +219,40 @@ public class S_PlayerMove : MonoBehaviour
 
         }
 
-        // 空中での二段ジャンプ（または落下時の空中ジャンプ）開始処理
-        if (Input.GetKeyDown(KeyCode.Space) && !isGrounded && canDoubleJump && isSecondJumpEnabled)
-        {
-
-            canDoubleJump = false; // 空中ジャンプ権を消費
-            jumpTimeCounter = 0;   // ジャンプ時間をリセットし、再度長押しジャンプを可能にする
-            isJump = false;        // ジャンプ上昇可能状態にする
-            moveData.ySpeed = moveData.mainSpeedY; // 現在の落下速度をキャンセルし、上向きの速度を設定
-        }
-
-        // ジャンプ上昇処理（1段目・2段目共通）
-        if (Input.GetKey(KeyCode.Space) && (jumpTimeCounter < moveData.jumpTime) && !isJump)
-        {
-            playerAnimSystem.JumpAnim(); // ジャンプアニメーションを再生する
-
-            moveData.ySpeed = moveData.mainSpeedY;
-            jumpTimeCounter += Time.deltaTime;
-        }
-        // 落下処理（キーを離した、またはジャンプ時間上限に達した）
-        else if (!isGrounded)
-        {
-            
-            playerAnimSystem.JumpAnim(); // ジャンプアニメーションを再生する
-
-            isJump = true;
-            if (moveData.ySpeed > -moveData.mainSpeedY)
+            // 空中での二段ジャンプ（または落下時の空中ジャンプ）開始処理
+            if (Input.GetKeyDown(KeyCode.Space) && !isGrounded && canDoubleJump && isSecondJumpEnabled && !isSpecialFloor)
             {
-                moveData.ySpeed -= moveData.attenuationJump * Time.deltaTime;
+
+                canDoubleJump = false; // 空中ジャンプ権を消費
+                jumpTimeCounter = 0;   // ジャンプ時間をリセットし、再度長押しジャンプを可能にする
+                isJump = false;        // ジャンプ上昇可能状態にする
+                moveData.ySpeed = moveData.mainSpeedY; // 現在の落下速度をキャンセルし、上向きの速度を設定
             }
-        }
 
-        //----------------------------------------------------[縦移動処理]----------------------------------------------------------
+            // ジャンプ上昇処理（1段目・2段目共通）
+            if (Input.GetKey(KeyCode.Space) && (jumpTimeCounter < moveData.jumpTime) && !isJump)
+            {
+                playerAnimSystem.JumpAnim(); // ジャンプアニメーションを再生する
 
+                moveData.ySpeed = moveData.mainSpeedY;
+                jumpTimeCounter += Time.deltaTime;
+            }
+            // 落下処理（キーを離した、またはジャンプ時間上限に達した）
+            else if (!isGrounded && !isSpecialFloor)
+            {
+
+                playerAnimSystem.JumpAnim(); // ジャンプアニメーションを再生する
+
+                isJump = true;
+                if (moveData.ySpeed > -moveData.mainSpeedY)
+                {
+                    moveData.ySpeed -= moveData.attenuationJump * Time.deltaTime;
+                }
+            }
+
+            //----------------------------------------------------[縦移動処理]----------------------------------------------------------
+
+        
     }
 
     private void FixedUpdate()

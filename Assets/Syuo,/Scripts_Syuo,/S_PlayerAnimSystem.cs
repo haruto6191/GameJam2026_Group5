@@ -173,11 +173,11 @@ public class S_PlayerAnimSystem : MonoBehaviour
                 sl.transform.position += new Vector3(currentSpeed, 0, 0);//攻撃エフェクトを右に移動
             }
 
-            Debug.Log("攻撃エフェクトの位置: " + sl.transform.position);//攻撃エフェクトの位置をログに出力
+           // Debug.Log("攻撃エフェクトの位置: " + sl.transform.position);//攻撃エフェクトの位置をログに出力
             yield return null;//次のフレームまで待つ
         }
 
-        Debug.Log("攻撃エフェクトを破壊します。");//攻撃エフェクトを破壊する前にログを出力
+        //Debug.Log("攻撃エフェクトを破壊します。");//攻撃エフェクトを破壊する前にログを出力
         Destroy(sl);//攻撃エフェクトを破壊する
     }
 

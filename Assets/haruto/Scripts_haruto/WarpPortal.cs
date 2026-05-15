@@ -11,7 +11,8 @@ public class WarpPortal : MonoBehaviour
         {
             // プレイヤーの座標を、目的地の座標に書き換える
             // destination.position で目的地の中心座標を取得
-            collision.transform.position = destination.position;
+
+            collision.transform.parent.transform.position = destination.position;
 
            // Debug.Log("Teleported to " + destination.name);
         }

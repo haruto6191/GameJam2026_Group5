@@ -5,7 +5,7 @@ public class BottomlessSwamp : MonoBehaviour
     [Header("è¿ÇÃê›íË")]
     [SerializeField] private float sinkSpeed = 2.0f; // íæÇﬁë¨Ç≥
 
-    /*private void OnTriggerStay2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
@@ -33,5 +33,5 @@ public class BottomlessSwamp : MonoBehaviour
                 }
             }
         }
-    }*/
+    }
 }
