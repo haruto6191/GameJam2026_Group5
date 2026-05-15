@@ -7,10 +7,14 @@ public class S_CoinControler : MonoBehaviour
 {
     private SkeletonAnimation skel;
     [SerializeField] private ParticleSystem effec;
+    [SerializeField] private bool isExtraCoin;
+
+    private UI_General ui;
 
     private void Start()
     {
         skel = GetComponent<SkeletonAnimation>();
+        ui = UI_General.instance;
     }
 
 
@@ -24,5 +28,11 @@ public class S_CoinControler : MonoBehaviour
         }
 
         //ÉXÉRÉAëùâ¡èàóùÇ»Ç«
+        if(!isExtraCoin)
+            ui.GetCoin(1);
+        else
+        {
+            ui.GetCoin(30);
+        }
     }
 }

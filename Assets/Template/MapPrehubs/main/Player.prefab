@@ -170,7 +170,7 @@ Transform:
   m_GameObject: {fileID: 3069627278370129632}
   serializedVersion: 2
   m_LocalRotation: {x: 0.0031832107, y: -0, z: -0, w: 0.999995}
-  m_LocalPosition: {x: -90.57, y: 5.56, z: -0}
+  m_LocalPosition: {x: -31.58, y: -7.24, z: -0.08}
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10234,6 +10234,8 @@ GameObject:
   - component: {fileID: 4380918684435069333}
   - component: {fileID: 2979647749802329391}
   - component: {fileID: 3414286711995808964}
+  - component: {fileID: 5464658043186935738}
+  - component: {fileID: 1307167182093546967}
   m_Layer: 0
   m_Name: HeartBox
   m_TagString: Player
@@ -10325,3 +10327,31 @@ PolygonCollider2D:
       - {x: 22.460506, y: -2.4869275}
       - {x: 22.62344, y: 0.6495128}
   m_UseDelaunayMesh: 1
+--- !u!114 &5464658043186935738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8325376868948288838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e171d5c78eec1a44091535465b57b323, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Exp_player_status
+  player_HP: 100
+  HP_slider: {fileID: 0}
+  Fade_obj: {fileID: 0}
+  fade_speed: 0
+--- !u!114 &1307167182093546967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8325376868948288838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2e64af85c776f14da837dc93650203f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_TakeDamage

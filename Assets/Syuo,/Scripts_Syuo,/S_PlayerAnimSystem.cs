@@ -96,12 +96,11 @@ public class S_PlayerAnimSystem : MonoBehaviour
 
     public void TakeDamageAnim()//ダメージを受けるアニメーションを再生するメソッド
     {
-        if (currentAnimState != PlayerAnimState.TakeDamage)//現在のアニメーション状態がTakeDamageでない場合
-        {
+       
             currentAnimState = PlayerAnimState.TakeDamage;//アニメーション状態をTakeDamageに変更
             skelAnim.AnimationState.SetAnimation(1, "TakeDamage", false);//1トラックにTakeDamageアニメーションを再生
-            skelAnim.AnimationState.AddEmptyAnimation(1, 0f, 0.5f);//1トラックのアニメーションを0.5秒かけてフェードアウト
-        }
+            Invoke("EmptyAnim", 0.5f);//0.3秒後にIdleAnimメソッドを呼び出す
+        
     }
 
     public void SquatAnim()//しゃがみアニメーションを再生するメソッド
@@ -133,6 +132,7 @@ public class S_PlayerAnimSystem : MonoBehaviour
     public void EmptyAnim()
     {
                skelAnim.AnimationState.SetEmptyAnimation(1, 0f);//1トラックのアニメーションを空にして、0秒かけてフェードアウト
+        currentAnimState = PlayerAnimState.Idle;//アニメーション状態をIdleに変更
     }
 
     private void OnSpineEvent(TrackEntry trackEntry, Spine.Event e)//Spineイベントが発生したときに呼び出されるメソッド
