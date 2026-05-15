@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 737417193145027899}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30, y: 27, z: -10}
+  m_LocalPosition: {x: 19.7, y: 17.1, z: -10}
   m_LocalScale: {x: 0, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -170,8 +170,8 @@ Transform:
   m_GameObject: {fileID: 3069627278370129632}
   serializedVersion: 2
   m_LocalRotation: {x: 0.0031832107, y: -0, z: -0, w: 0.999995}
-  m_LocalPosition: {x: -31.58, y: -7.24, z: -0.08}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalPosition: {x: -25.07, y: -7.48, z: -0.07}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2358629878981778153}
@@ -217,6 +217,9 @@ MeshRenderer:
   m_Materials:
   - {fileID: 2100000, guid: 93340d02f972130448c5898e728b69bc, type: 2}
   - {fileID: 2100000, guid: 434ea33c3d0ad9b48b22bbda5f9eae25, type: 2}
+  - {fileID: 2100000, guid: 93340d02f972130448c5898e728b69bc, type: 2}
+  - {fileID: 2100000, guid: 7ccb92efb65fa514a94280b26cc0ca2d, type: 2}
+  - {fileID: 2100000, guid: 434ea33c3d0ad9b48b22bbda5f9eae25, type: 2}
   - {fileID: 2100000, guid: 7ccb92efb65fa514a94280b26cc0ca2d, type: 2}
   - {fileID: 2100000, guid: 434ea33c3d0ad9b48b22bbda5f9eae25, type: 2}
   - {fileID: 2100000, guid: 93340d02f972130448c5898e728b69bc, type: 2}
@@ -234,7 +237,6 @@ MeshRenderer:
   - {fileID: 2100000, guid: 93340d02f972130448c5898e728b69bc, type: 2}
   - {fileID: 2100000, guid: 434ea33c3d0ad9b48b22bbda5f9eae25, type: 2}
   - {fileID: 2100000, guid: 93340d02f972130448c5898e728b69bc, type: 2}
-  - {fileID: 2100000, guid: 7ccb92efb65fa514a94280b26cc0ca2d, type: 2}
   - {fileID: 2100000, guid: 434ea33c3d0ad9b48b22bbda5f9eae25, type: 2}
   - {fileID: 2100000, guid: 93340d02f972130448c5898e728b69bc, type: 2}
   - {fileID: 2100000, guid: 7ccb92efb65fa514a94280b26cc0ca2d, type: 2}
@@ -306,7 +308,7 @@ MonoBehaviour:
   physicsMovementRelativeTo: {fileID: 0}
   updateTiming: 2
   unscaledTime: 0
-  _animationName: Attack
+  _animationName: 
   loop: 1
   timeScale: 1
 --- !u!114 &3547644733076024589

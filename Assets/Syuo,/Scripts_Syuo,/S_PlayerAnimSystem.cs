@@ -29,6 +29,11 @@ public class S_PlayerAnimSystem : MonoBehaviour
     [SerializeField] private float slashDuration = 0.5f;//攻撃エフェクトの持続時間
     [SerializeField] private float slashSpeed = 0.1f;//攻撃エフェクトの移動速度
 
+    private Exp_player_status status;//プレイヤーのステータスを管理するクラスへの参照
+    private S_PlayerMove playerMove;//S_PlayerMoveコンポーネントへの参照
+
+    private bool isLowHp;//プレイヤーのHPが低い状態かどうかを表す変数
+
     private void Start()
     {
         skeleton = skelAnim.Skeleton;
@@ -37,6 +42,10 @@ public class S_PlayerAnimSystem : MonoBehaviour
         skelAnim.AnimationState.SetAnimation(0, "Idle", true);//0トラックはIdleアニメーションを再生
 
         skelAnim.AnimationState.Event += OnSpineEvent;
+
+        status = Exp_player_status.instance;//Exp_player_statusクラスのインスタンスを取得
+        playerMove = GetComponent<S_PlayerMove>();//S_PlayerMoveコンポーネントを取得
+        isLowHp = false;//初期状態ではHPが低くないとする
     }
 
     public void DashAnim()//ダッシュアニメーションを再生するメソッド
@@ -74,12 +83,45 @@ public class S_PlayerAnimSystem : MonoBehaviour
 
     public void FallenDownAnim()//転倒アニメーションを再生するメソッド
     {
-        if(currentAnimState != PlayerAnimState.FallenDown)//現在のアニメーション状態がFallenDownでない場合
+        Time.timeScale = 1f;//ゲームの時間を通常に戻す
+
+        if (currentAnimState != PlayerAnimState.FallenDown)//現在のアニメーション状態がFallenDownでない場合
         {
+            playerMove.moveData.xSpeed = 0f;//プレイヤーの横移動速度を0にする
+            playerMove.moveData.ySpeed = 0f;//プレイヤーの縦移動速度を0にする
+            skelAnim.UnscaledTime = true;//アニメーションの再生時間をゲームの時間に依存しないようにする
+
             currentAnimState = PlayerAnimState.FallenDown;//アニメーション状態をFallenDownに変更
-            skelAnim.AnimationState.SetAnimation(1, "FallenDown", false);
+            skelAnim.AnimationState.SetAnimation(1, "FallenOver", false);
         }
     }
+
+    //-----------------------------------------後で書き換えます--------------------------------------------
+    private void Update()
+    {
+        
+        if (status.player_HP <= 0)
+        {
+            FallenDownAnim();
+            Debug.Log("プレイヤーのHPが0以下になりました。転倒アニメーションを再生します。" + Time.timeScale);
+        }
+        else if(status.player_HP <= 50 && !isLowHp)
+        {
+            isLowHp = true;
+
+            SkinAduption();
+            Debug.Log("プレイヤーのHPが30以下になりました。HPが低い状態になりました。");
+        }
+         else if (status.player_HP > 30 && isLowHp)
+        {
+            SkinAduption();
+            isLowHp = false;
+            Debug.Log("プレイヤーのHPが30を超えました。HPが低い状態を解除します。");
+        }
+
+    }
+    //-----------------------------------------後で書き換えます--------------------------------------------
+
 
     public void IdleAnim()//アイドルアニメーションを再生するメソッド
     {
@@ -96,8 +138,10 @@ public class S_PlayerAnimSystem : MonoBehaviour
 
     public void TakeDamageAnim()//ダメージを受けるアニメーションを再生するメソッド
     {
-       
-            currentAnimState = PlayerAnimState.TakeDamage;//アニメーション状態をTakeDamageに変更
+        playerMove.moveData.xSpeed = 0f;//プレイヤーの横移動速度を0にする
+        playerMove.moveData.ySpeed = 0f;//プレイヤーの縦移動速度を0にする
+
+        currentAnimState = PlayerAnimState.TakeDamage;//アニメーション状態をTakeDamageに変更
             skelAnim.AnimationState.SetAnimation(1, "TakeDamage", false);//1トラックにTakeDamageアニメーションを再生
             Invoke("EmptyAnim", 0.5f);//0.3秒後にIdleAnimメソッドを呼び出す
         
@@ -106,7 +150,7 @@ public class S_PlayerAnimSystem : MonoBehaviour
     public void SquatAnim()//しゃがみアニメーションを再生するメソッド
     {
         if (currentAnimState == PlayerAnimState.Slide || currentAnimState == PlayerAnimState.FallenDown
-            || currentAnimState == PlayerAnimState.Jump)//現在のアニメーション状態がSlide、FallenDown、Jumpのいずれかの場合
+            || currentAnimState == PlayerAnimState.Jump || currentAnimState == PlayerAnimState.TakeDamage)//現在のアニメーション状態がSlide、FallenDown、Jumpのいずれかの場合
             return;//ダッシュアニメーションを再生せずに終了
         if (currentAnimState != PlayerAnimState.Squat)//現在のアニメーション状態がSquatでない場合
         {
@@ -117,7 +161,7 @@ public class S_PlayerAnimSystem : MonoBehaviour
 
     public void AttackAnim()//攻撃アニメーションを再生するメソッド
     {
-        if(currentAnimState == PlayerAnimState.Slide || currentAnimState == PlayerAnimState.FallenDown )
+        if(currentAnimState == PlayerAnimState.Slide || currentAnimState == PlayerAnimState.FallenDown || currentAnimState == PlayerAnimState.TakeDamage)
                 //現在のアニメーション状態がSlide、FallenDownのいずれかの場合
             return;//攻撃アニメーションを再生せずに終了
          skelAnim.AnimationState.SetAnimation(2, "Attack", false);//2トラックにAttackアニメーションを再生
@@ -127,6 +171,7 @@ public class S_PlayerAnimSystem : MonoBehaviour
     private void EndSlideAnim()
     {
         currentAnimState = PlayerAnimState.Idle;//アニメーション状態をIdleに変更
+       
     }
 
     public void EmptyAnim()
@@ -181,5 +226,17 @@ public class S_PlayerAnimSystem : MonoBehaviour
         Destroy(sl);//攻撃エフェクトを破壊する
     }
 
+    private void SkinAduption()
+    {
+        Skin skin = new Skin("NewSkin");//新しいスキンを作成
+        
+        if(isLowHp)
+            skin.AddSkin(skelData.FindSkin("LowHp"));//HPが低い状態のスキンを新しいスキンに追加
+        else
+            skin.AddSkin(skelData.FindSkin("Equipment"));//既存のスキンを新しいスキンに追加
 
+        skeleton.SetSkin(skin);//スケルトンに新しいスキンを適用
+        skeleton.SetSlotsToSetupPose();
+        skelAnim.Update(0);
+    }
 }

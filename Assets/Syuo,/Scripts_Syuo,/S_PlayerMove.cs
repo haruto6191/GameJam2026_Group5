@@ -95,6 +95,9 @@ public class S_PlayerMove : MonoBehaviour
 
     private void Update()
     {
+        if(playerAnimSystem.currentAnimState == S_PlayerAnimSystem.PlayerAnimState.FallenDown || 
+            playerAnimSystem.currentAnimState == S_PlayerAnimSystem.PlayerAnimState.TakeDamage)
+            return;//転倒状態のときは移動処理を行わない
         if (isSlide)
             return;//スライド状態のときは移動処理を行わない
 
@@ -168,14 +171,14 @@ public class S_PlayerMove : MonoBehaviour
         if (moveData.isLeft && updateAnimation)//左向きのとき
         {
             transform.localScale = new Vector3(-size, size, 1);//プレイヤーを反転させる
-            mainCamera.transform.localPosition = new Vector3(-30, 27, -10);//カメラを反転させる
+            mainCamera.transform.localPosition = new Vector3(-19, 20.2f, -10);//カメラを反転させる
             //bg.transform.localPosition = new Vector3(-bgXPos, bgYPos, 0);//背景を反転させる
             //reaf.localScale = new Vector3(-1, 1, 1);//リーフを反転させる
         }
         else if (!moveData.isLeft && updateAnimation)//右向きのとき
         {
             transform.localScale = new Vector3(size, size, 1);//プレイヤーを元に戻す
-            mainCamera.transform.localPosition = new Vector3(30, 27, -10);//カメラを反転させる
+            mainCamera.transform.localPosition = new Vector3(19, 20.2f, -10);//カメラを反転させる
             //bg.transform.localPosition = new Vector3(bgXPos, bgYPos, 0);//背景を反転させる
             //reaf.localScale = new Vector3(1, 1, 1);//リーフを元に戻す
         }
