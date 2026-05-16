@@ -112,12 +112,7 @@ public class S_PlayerAnimSystem : MonoBehaviour
             SkinAduption();
             Debug.Log("プレイヤーのHPが30以下になりました。HPが低い状態になりました。");
         }
-         else if (status.player_HP > 30 && isLowHp)
-        {
-            SkinAduption();
-            isLowHp = false;
-            Debug.Log("プレイヤーのHPが30を超えました。HPが低い状態を解除します。");
-        }
+
 
     }
     //-----------------------------------------後で書き換えます--------------------------------------------
