@@ -307,7 +307,7 @@ MonoBehaviour:
   physicsRotationInheritanceFactor: 1
   physicsMovementRelativeTo: {fileID: 0}
   updateTiming: 2
-  unscaledTime: 0
+  unscaledTime: 1
   _animationName: 
   loop: 1
   timeScale: 1
@@ -10189,10 +10189,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 28.216108, y: -2.6511524}
+    - - {x: 24.856108, y: -2.6511524}
       - {x: 1.3130932, y: -2.606013}
-      - {x: 1.2679541, y: -20.210331}
-      - {x: 28.080688, y: -20.029776}
+      - {x: 1.3879534, y: -21.470331}
+      - {x: 27.660692, y: -20.809774}
   m_UseDelaunayMesh: 1
 --- !u!1 &8118934221648257545
 GameObject:
