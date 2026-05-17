@@ -12,11 +12,13 @@ public class Exp_player_status : MonoBehaviour
     [SerializeField]
     private Slider HP_slider;
 
-
     [SerializeField]
     private GameObject Fade_obj;
     [SerializeField]
     private float fade_speed;
+
+    [SerializeField]
+    private Vector3 Respawn_pos;
 
     public void Awake()
     {
@@ -25,15 +27,12 @@ public class Exp_player_status : MonoBehaviour
 
     void Start()
     {
+        //player_HP = UI_General.instance.manager.player_HP;
+
         player_maxHP = player_HP;
 
         HP_slider.maxValue = player_maxHP;
         HP_slider.value = player_HP;
-    }
-
-    void FixedUpdate()
-    {
-        
     }
 
     public void TakeDamage(int damage)
@@ -51,7 +50,8 @@ public class Exp_player_status : MonoBehaviour
 
     int PlayerDeath()
     {
-        transform.position = new Vector3(0, 0, 0);
+        transform.parent.position = Respawn_pos;
+        //transform.position = Respawn_pos;
 
         //Hierarchy‚ÉUI_General‚ª‚È‚©‚Á‚½‚çŽg‚í‚ñ‚Å‚Ë
         UI_General.instance.GetLife(-1);
@@ -85,6 +85,8 @@ public class Exp_player_status : MonoBehaviour
 
     IEnumerator Death_Direction() //Ž€–S‰‰o
     {
+        yield return new WaitForSecondsRealtime(2.0f);
+
         Time.timeScale = 0;
 
         Fade_obj.SetActive(true);
@@ -107,7 +109,7 @@ public class Exp_player_status : MonoBehaviour
 
         while (fade_img.color.a > 0)
         {
-            temp_color.a -= Time.unscaledDeltaTime * fade_speed * 2;
+            temp_color.a -= Time.unscaledDeltaTime * fade_speed;
             fade_img.color = temp_color;
             yield return new WaitForSecondsRealtime(0.01f);
         }

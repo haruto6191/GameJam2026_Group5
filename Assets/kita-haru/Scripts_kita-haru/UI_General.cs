@@ -5,6 +5,8 @@ public class UI_General : MonoBehaviour
 {
     public static UI_General instance; //ƒOƒ[ƒoƒ‹‰»
 
+    public Score_Manager manager;
+
     public int score = 0, coin = 0, life = 3;
     public float game_time = 300;
 
@@ -15,7 +17,15 @@ public class UI_General : MonoBehaviour
     {
         if (instance == null) instance = this;
     }
-
+    /*
+    private void Start()
+    {
+        game_time = manager.time;
+        GetScore(manager.score);
+        GetCoin(manager.coin);
+        GetLife(manager.life);
+    }
+    */
     void FixedUpdate()
     {
         //timeŒ¸Z

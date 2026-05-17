@@ -15,13 +15,13 @@ public class Arrow_move : MonoBehaviour
         transform.Translate(speed, 0, 0);
     }
 
-    /*
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Wall") || collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") || collision.CompareTag("PlayerAttack"))
         {
             Destroy(gameObject);
         }
     }
-    */
+    
 }
