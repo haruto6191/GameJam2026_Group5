@@ -46,6 +46,7 @@ public class S_PlayerAnimSystem : MonoBehaviour
         status = Exp_player_status.instance;//Exp_player_statusクラスのインスタンスを取得
         playerMove = GetComponent<S_PlayerMove>();//S_PlayerMoveコンポーネントを取得
         isLowHp = false;//初期状態ではHPが低くないとする
+        skelAnim.UnscaledTime = true;//アニメーションの再生時間をゲームの時間に依存しないようにする
     }
 
     public void DashAnim()//ダッシュアニメーションを再生するメソッド
@@ -83,16 +84,24 @@ public class S_PlayerAnimSystem : MonoBehaviour
 
     public void FallenDownAnim()//転倒アニメーションを再生するメソッド
     {
-        Time.timeScale = 1f;//ゲームの時間を通常に戻す
+        //Time.timeScale = 1f;//ゲームの時間を通常に戻す
 
         if (currentAnimState != PlayerAnimState.FallenDown)//現在のアニメーション状態がFallenDownでない場合
         {
+            Time.timeScale = 1f;//ゲームの時間を通常に戻す
+
             playerMove.moveData.xSpeed = 0f;//プレイヤーの横移動速度を0にする
             playerMove.moveData.ySpeed = 0f;//プレイヤーの縦移動速度を0にする
-            skelAnim.UnscaledTime = true;//アニメーションの再生時間をゲームの時間に依存しないようにする
+            
 
             currentAnimState = PlayerAnimState.FallenDown;//アニメーション状態をFallenDownに変更
             skelAnim.AnimationState.SetAnimation(1, "FallenOver", false);
+            
+            
+            //skeleton.SetSlotsToSetupPose();
+            skelAnim.Update(0);
+
+            Debug.Log("転倒アニメーションを再生します。ゲームの時間に依存しないように設定しました。" + Time.timeScale);
         }
     }
 
@@ -104,6 +113,8 @@ public class S_PlayerAnimSystem : MonoBehaviour
         {
             FallenDownAnim();
             Debug.Log("プレイヤーのHPが0以下になりました。転倒アニメーションを再生します。" + Time.timeScale);
+            skelAnim.timeScale = 1f;//アニメーションの再生速度を通常にする
+            skelAnim.UnscaledTime = true;//アニメーションの再生時間をゲームの時間に依存しないようにする
         }
         else if(status.player_HP <= 50 && !isLowHp)
         {
