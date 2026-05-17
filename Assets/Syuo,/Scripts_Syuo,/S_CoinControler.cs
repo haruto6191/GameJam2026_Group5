@@ -5,34 +5,59 @@ using Spine.Unity;
 
 public class S_CoinControler : MonoBehaviour
 {
-    private SkeletonAnimation skel;
+    [SerializeField] private SkeletonAnimation skel;
     [SerializeField] private ParticleSystem effec;
     [SerializeField] private bool isExtraCoin;
+    [SerializeField] private GameObject coinObj;
+    private bool isGet;
+
+    private Exp_player_status stat;
 
     private UI_General ui;
 
     private void Start()
     {
-        skel = GetComponent<SkeletonAnimation>();
         ui = UI_General.instance;
+        stat = Exp_player_status.instance;
+        isGet = false;
+        coinObj.SetActive(true);
     }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        //スコア増加処理など
+        if (!isExtraCoin && !isGet)
+            ui.GetCoin(1);
+        else if(!isGet)
+        {
+            ui.GetExCoin(1);
+        }
+
+        if (collision.CompareTag("Player") && !isGet)
         {
             effec.Play();
             skel.AnimationState.SetAnimation(0, "Get", false);
-             Destroy(gameObject, 0.5f);
+            
+            isGet = true;
+            Invoke("ActiveItem", 0.5f);
         }
 
-        //スコア増加処理など
-        if(!isExtraCoin)
-            ui.GetCoin(1);
-        else
+        
+    }
+
+    private void ActiveItem()
+    {
+        coinObj.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if(stat.isDead && isGet)
         {
-            ui.GetCoin(30);
-        }
+            coinObj.SetActive(true);
+            isGet = false;
+            skel.AnimationState.SetAnimation(0, "Default", true);
+        }        
     }
 }

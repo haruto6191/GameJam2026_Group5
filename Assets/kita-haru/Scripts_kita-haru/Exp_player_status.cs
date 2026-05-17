@@ -20,6 +20,13 @@ public class Exp_player_status : MonoBehaviour
     [SerializeField]
     private Vector3 Respawn_pos;
 
+    public bool isDead = false;
+    private bool isGameOver = false;
+    [SerializeField] private GameObject gameOverCanvas;//ゲームオーバー演出用のCanvas
+    [SerializeField] private GameObject mainCanvas;//メインのUIを表示するCanvas
+
+    private Transform player;
+
     public void Awake()
     {
         if (instance == null) instance = this;
@@ -33,17 +40,33 @@ public class Exp_player_status : MonoBehaviour
 
         HP_slider.maxValue = player_maxHP;
         HP_slider.value = player_HP;
+
+        mainCanvas.SetActive(true);
+        gameOverCanvas.SetActive(false);
+        isGameOver = false;
+        isDead = false;
+
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        Fade_obj.GetComponent<Image>().color = new Color(0, 0, 0, 0);
     }
 
-    public void TakeDamage(int damage)
+    [ContextMenu("倒れる")]
+    public void Death()
+    {
+        TakeDamage(10000);
+    }
+
+
+    public void TakeDamage(int damage = 100)
     {
         player_HP -= damage;
         player_HP = Mathf.Clamp(player_HP, 0, player_maxHP);
 
         HP_slider.value = player_HP;
 
-        if (player_HP <= 0)
+        if (player_HP <= 0 && !isDead)
         {
+            isDead = true;
             StartCoroutine(Death_Direction());
         }
     }
@@ -77,17 +100,23 @@ public class Exp_player_status : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "DeathArea")
+        if (collision.gameObject.tag == "DeathArea" && !isDead)
         {
+            isDead = true;
             StartCoroutine(Death_Direction());
         }
     }
 
     IEnumerator Death_Direction() //死亡演出
     {
+        //Debug.Log("死亡演出開始前");
+        S_PlayerAnimSystem.instance.FallenDownAnim();
+
         yield return new WaitForSecondsRealtime(2.0f);
 
         Time.timeScale = 0;
+
+        Debug.Log("死亡演出開始");
 
         Fade_obj.SetActive(true);
 
@@ -98,13 +127,34 @@ public class Exp_player_status : MonoBehaviour
             temp_color.a += Time.unscaledDeltaTime * fade_speed;
             fade_img.color = temp_color;
             yield return new WaitForSecondsRealtime(0.01f);
+            Debug.Log("フェードイン中");
         }
 
         if (PlayerDeath() == 0)
         {
             //ゲームオーバー演出がここぉ
             //Time.timeScale = 0なの注意
+
+            gameOverCanvas.SetActive(true);
+            mainCanvas.SetActive(false);
+
+            //Debug.Log("ゲームオーバー");
+
+            isGameOver = true;
+
             yield break;
+        }
+
+        if (!isGameOver)
+        {
+            S_PlayerAnimSystem.instance.GameStartAnim();
+            Time.timeScale = 1;
+            player.position = Respawn_pos;
+            UI_General.instance.game_time = 300;
+            UI_General.instance.exCoin = 0;
+            UI_General.instance.GetExCoin(0);
+            isDead = false;
+
         }
 
         while (fade_img.color.a > 0)
@@ -112,10 +162,33 @@ public class Exp_player_status : MonoBehaviour
             temp_color.a -= Time.unscaledDeltaTime * fade_speed;
             fade_img.color = temp_color;
             yield return new WaitForSecondsRealtime(0.01f);
+
+            //Debug.Log("フェードアウト中");
         }
 
         Fade_obj.SetActive(false);
+        
+
+    }
+
+    public void Retry()
+    {
+        Debug.Log("リトライ");
+        isDead = false;
+        isGameOver = false;
+
+        Fade_obj.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+
+        player.position = Respawn_pos;
+        mainCanvas.SetActive(true);
+        gameOverCanvas.SetActive(false);
+
+        player_HP = player_maxHP;
 
         Time.timeScale = 1;
+
+        UI_General.instance.Retry();
+        S_PlayerAnimSystem.instance.GameStartAnim();
+
     }
 }

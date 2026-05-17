@@ -5,6 +5,9 @@ using System.Collections;
 
 public class S_PlayerAnimSystem : MonoBehaviour
 {
+    public static S_PlayerAnimSystem instance;//シングルトンパターンのインスタンスを格納する変数
+
+
     public enum PlayerAnimState//プレイヤーのアニメーション状態を表す列挙型
     {
         Idle,
@@ -34,6 +37,18 @@ public class S_PlayerAnimSystem : MonoBehaviour
 
     private bool isLowHp;//プレイヤーのHPが低い状態かどうかを表す変数
 
+    private void Awake()
+    {
+        if (instance == null)//インスタンスがまだ存在しない場合
+        {
+            instance = this;//このクラスのインスタンスを格納
+        }
+        else//すでにインスタンスが存在する場合
+        {
+            Destroy(gameObject);//このゲームオブジェクトを破壊して、重複したインスタンスを防止
+        }
+    }
+
     private void Start()
     {
         skeleton = skelAnim.Skeleton;
@@ -48,6 +63,8 @@ public class S_PlayerAnimSystem : MonoBehaviour
         isLowHp = false;//初期状態ではHPが低くないとする
         skelAnim.UnscaledTime = true;//アニメーションの再生時間をゲームの時間に依存しないようにする
     }
+
+
 
     public void DashAnim()//ダッシュアニメーションを再生するメソッド
     {
@@ -88,7 +105,7 @@ public class S_PlayerAnimSystem : MonoBehaviour
 
         if (currentAnimState != PlayerAnimState.FallenDown)//現在のアニメーション状態がFallenDownでない場合
         {
-            Time.timeScale = 1f;//ゲームの時間を通常に戻す
+            //Time.timeScale = 1f;//ゲームの時間を通常に戻す
 
             playerMove.moveData.xSpeed = 0f;//プレイヤーの横移動速度を0にする
             playerMove.moveData.ySpeed = 0f;//プレイヤーの縦移動速度を0にする
@@ -111,8 +128,8 @@ public class S_PlayerAnimSystem : MonoBehaviour
         
         if (status.player_HP <= 0)
         {
-            FallenDownAnim();
-            Debug.Log("プレイヤーのHPが0以下になりました。転倒アニメーションを再生します。" + Time.timeScale);
+         
+           // Debug.Log("プレイヤーのHPが0以下になりました。転倒アニメーションを再生します。" + Time.timeScale);
             skelAnim.timeScale = 1f;//アニメーションの再生速度を通常にする
             skelAnim.UnscaledTime = true;//アニメーションの再生時間をゲームの時間に依存しないようにする
         }
@@ -121,7 +138,7 @@ public class S_PlayerAnimSystem : MonoBehaviour
             isLowHp = true;
 
             SkinAduption();
-            Debug.Log("プレイヤーのHPが30以下になりました。HPが低い状態になりました。");
+           // Debug.Log("プレイヤーのHPが30以下になりました。HPが低い状態になりました。");
         }
 
 
@@ -244,5 +261,12 @@ public class S_PlayerAnimSystem : MonoBehaviour
         skeleton.SetSkin(skin);//スケルトンに新しいスキンを適用
         skeleton.SetSlotsToSetupPose();
         skelAnim.Update(0);
+    }
+
+    public void GameStartAnim()
+    {
+        currentAnimState = PlayerAnimState.Idle;//アニメーション状態をIdleに変更
+        skelAnim.AnimationState.SetAnimation(0, "Idle", true);
+        skelAnim.AnimationState.SetEmptyAnimation(1, 0f);//1トラックのアニメーションを空にして、0秒かけてフェードアウト
     }
 }

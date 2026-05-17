@@ -56,6 +56,8 @@ public class S_PlayerMove : MonoBehaviour
     private S_PlayerAnimSystem playerAnimSystem;//S_PlayerAnimSystemコンポーネントへの参照
 
     [SerializeField] private GameObject mainCamera;//むりやりカメラ追従
+    private Vector3 cameraOffset;//カメラのオフセット
+
     [SerializeField] private bool isSecondJumpEnabled = true;//二段ジャンプが有効かどうか
     //[SerializeField] private Transform reaf;//リーフのTransformへの参照
 
@@ -87,9 +89,10 @@ public class S_PlayerMove : MonoBehaviour
         dashEffectR.SetActive(false);//ダッシュエフェクトを非表示にする
         dashEffectL.SetActive(false);//ダッシュエフェクトを非表示にする
 
-           // bgXPos = bg.transform.localPosition.x;//背景のX座標を取得する
-           // bgYPos = bg.transform.localPosition.y;//背景のY座標を取得する
+        // bgXPos = bg.transform.localPosition.x;//背景のX座標を取得する
+        // bgYPos = bg.transform.localPosition.y;//背景のY座標を取得する
 
+        cameraOffset = mainCamera.transform.localPosition;//カメラのオフセットを取得する
         isSpecialFloor = false;
     }
 
@@ -171,14 +174,14 @@ public class S_PlayerMove : MonoBehaviour
         if (moveData.isLeft && updateAnimation)//左向きのとき
         {
             transform.localScale = new Vector3(-size, size, 1);//プレイヤーを反転させる
-            mainCamera.transform.localPosition = new Vector3(-19, 20.2f, -10);//カメラを反転させる
+            mainCamera.transform.localPosition = new Vector3(-cameraOffset.x, cameraOffset.y, -10);//カメラを反転させる
             //bg.transform.localPosition = new Vector3(-bgXPos, bgYPos, 0);//背景を反転させる
             //reaf.localScale = new Vector3(-1, 1, 1);//リーフを反転させる
         }
         else if (!moveData.isLeft && updateAnimation)//右向きのとき
         {
             transform.localScale = new Vector3(size, size, 1);//プレイヤーを元に戻す
-            mainCamera.transform.localPosition = new Vector3(19, 20.2f, -10);//カメラを反転させる
+            mainCamera.transform.localPosition = new Vector3(cameraOffset.x, cameraOffset.y, -10);//カメラを反転させる
             //bg.transform.localPosition = new Vector3(bgXPos, bgYPos, 0);//背景を反転させる
             //reaf.localScale = new Vector3(1, 1, 1);//リーフを元に戻す
         }

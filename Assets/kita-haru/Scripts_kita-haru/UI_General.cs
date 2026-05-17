@@ -7,11 +7,11 @@ public class UI_General : MonoBehaviour
 
     public Score_Manager manager;
 
-    public int score = 0, coin = 0, life = 3;
+    public int score = 0, coin = 0, life = 3, exCoin = 0;
     public float game_time = 300;
 
     [SerializeField]
-    Text score_text, coin_text, life_text, time_text;
+    Text score_text, coin_text, life_text, time_text,exCoin_text;
 
     public void Awake()
     {
@@ -26,6 +26,19 @@ public class UI_General : MonoBehaviour
         GetLife(manager.life);
     }
     */
+
+    private void Start()
+    {
+        exCoin = 0;
+
+        //èâä˙ílîΩâf
+        GetScore(score);
+        GetCoin(coin);
+        GetLife(life);
+        GetExCoin(0);
+        time_text.text = game_time.ToString("F0");
+    }
+
     void FixedUpdate()
     {
         //timeå∏éZ
@@ -85,5 +98,26 @@ public class UI_General : MonoBehaviour
 
         //life_textÇ…îΩâf
         life_text.text = life.ToString();
+    }
+
+    public void GetExCoin(int i)//exCoinälìæ
+    {
+        exCoin += i;
+        exCoin_text.text = exCoin.ToString() + "/3";//exCoin_textÇ…îΩâf
+    }
+
+    public void Retry()//ÉäÉgÉâÉC
+    {
+        coin = 0;
+        score = 0;
+        life = 3;
+        game_time = 300;
+        exCoin = 0;
+
+        GetScore(score);
+        GetCoin(coin);
+        GetLife(life);
+        GetExCoin(0);
+        time_text.text = game_time.ToString("F0");
     }
 }

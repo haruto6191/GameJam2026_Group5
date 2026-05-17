@@ -42,9 +42,8 @@ GameObject:
   - component: {fileID: 5706882847389157547}
   - component: {fileID: 2245720616906400165}
   - component: {fileID: 7767868401582079269}
-  - component: {fileID: 1016001567533104997}
   m_Layer: 0
-  m_Name: WarpGate_0
+  m_Name: Goal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,7 +115,7 @@ SpriteRenderer:
   m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -8145861954253452173, guid: ece3907bf94580c46bcf03238360624f, type: 3}
-  m_Color: {r: 0, g: 0.7835822, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -171,16 +170,3 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 4.140413, y: 5.7787933}
   m_EdgeRadius: 0
---- !u!114 &1016001567533104997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9088152126411207161}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e1389f25ce91c549bf4caee97bfcf0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WarpPortal
-  destination: {fileID: 5788023173013248720}
