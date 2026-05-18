@@ -12,6 +12,7 @@ public class TitleButtonSystem : MonoBehaviour
 
     public void StartGame()
     {
+        if(Time.timeScale != 1) Time.timeScale = 1;
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
 }

@@ -67,7 +67,7 @@ public class surprise_attack : MonoBehaviour
         attack = false;
         transform.localRotation = Quaternion.identity;
 
-        fiarst = true;
+        fiarst = false;
 
         color.a = 0;
         spriteRenderer.color = color;

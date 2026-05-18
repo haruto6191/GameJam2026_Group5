@@ -180,6 +180,7 @@ public class Exp_player_status : MonoBehaviour
 
     public void Retry()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         /*
         Debug.Log("ƒŠƒgƒ‰ƒC");
