@@ -81,7 +81,10 @@ public class S_PlayerAnimSystem : MonoBehaviour
 
     public void JumpAnim()//ジャンプアニメーションを再生するメソッド
     {
-        if(currentAnimState != PlayerAnimState.Jump)//現在のアニメーション状態がJumpでない場合
+        if(currentAnimState == PlayerAnimState.FallenDown)
+            return;//現在のアニメーション状態がFallenDownの場合はジャンプアニメーションを再生せずに終了
+
+        if (currentAnimState != PlayerAnimState.Jump)//現在のアニメーション状態がJumpでない場合
         {
             currentAnimState = PlayerAnimState.Jump;//アニメーション状態をJumpに変更
             skelAnim.AnimationState.SetAnimation(1, "Jump", true);
@@ -140,6 +143,14 @@ public class S_PlayerAnimSystem : MonoBehaviour
             SkinAduption();
            // Debug.Log("プレイヤーのHPが30以下になりました。HPが低い状態になりました。");
         }
+        else if(status.player_HP > 50 && isLowHp)
+        {
+      
+                isLowHp = false;
+                SkinAduption();
+                // Debug.Log("プレイヤーのHPが30以上になりました。HPが低い状態を解除しました。");
+            
+        }
 
 
     }
@@ -161,6 +172,9 @@ public class S_PlayerAnimSystem : MonoBehaviour
 
     public void TakeDamageAnim()//ダメージを受けるアニメーションを再生するメソッド
     {
+        if(currentAnimState == PlayerAnimState.FallenDown)
+            return;//現在のアニメーション状態がFallenDownの場合はダメージアニメーションを再生せずに終了
+
         playerMove.moveData.xSpeed = 0f;//プレイヤーの横移動速度を0にする
         playerMove.moveData.ySpeed = 0f;//プレイヤーの縦移動速度を0にする
 
