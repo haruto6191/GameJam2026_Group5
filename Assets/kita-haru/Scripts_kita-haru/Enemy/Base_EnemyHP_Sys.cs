@@ -18,6 +18,9 @@ public class Base_EnemyHP_Sys : MonoBehaviour
     void Start()
     {
         initial_pos = transform.position;
+        EnemyHPGauge = GameObject.Find("EnemyHPGauge").gameObject.GetComponent<Canvas>();
+        Common_slider = GameObject.Find("EnemySlider").gameObject.GetComponent<Slider>();
+
     }
 
     private void OnEnable()
