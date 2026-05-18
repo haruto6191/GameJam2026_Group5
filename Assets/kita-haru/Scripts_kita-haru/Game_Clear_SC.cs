@@ -54,17 +54,22 @@ public class Game_Clear_SC : MonoBehaviour
 
 
             int k = UI_General.instance.score;
-            float delay = 0.01f;
 
             UI_General.instance.score += general_data[i];
             while (k < UI_General.instance.score)
             {
-                k += Increase;
+                if (Input.GetMouseButtonDown(0))
+                {
+                    k = UI_General.instance.score;
+                }
+                else
+                {
+                    k += Increase;
+                }
+
                 sc_text.text = k.ToString("D6");
 
-                if (Input.GetMouseButtonDown(0)) delay = 0;
-
-                yield return new WaitForSecondsRealtime(delay);
+                yield return null;//new WaitForSecondsRealtime(0.01f);
             }
 
             plus_ef.gameObject.SetActive(false);

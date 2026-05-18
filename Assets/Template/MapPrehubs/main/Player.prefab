@@ -10346,8 +10346,10 @@ MonoBehaviour:
   Fade_obj: {fileID: 0}
   fade_speed: 0
   Respawn_pos: {x: 0, y: 0, z: 0}
+  isDead: 0
   gameOverCanvas: {fileID: 0}
   mainCanvas: {fileID: 0}
+  mainCamera: {fileID: 737417193145027899}
 --- !u!114 &1307167182093546967
 MonoBehaviour:
   m_ObjectHideFlags: 0
