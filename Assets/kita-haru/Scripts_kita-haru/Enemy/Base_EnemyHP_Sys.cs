@@ -38,9 +38,14 @@ public class Base_EnemyHP_Sys : MonoBehaviour
             Enemy_maxHP = Enemy_HP;
         }
         else
+        {
             HP_slider.gameObject.SetActive(true);
 
+            Enemy_HP = Enemy_maxHP;
+        }
+
         HP_slider.maxValue = Enemy_maxHP;
+
         HP_slider.value = Enemy_HP;
     }
 
@@ -82,8 +87,6 @@ public class Base_EnemyHP_Sys : MonoBehaviour
             HP_slider.gameObject.SetActive(false);
 
         transform.position = initial_pos;
-        Enemy_HP = Enemy_maxHP;
-
         //敵のプログラムの方でもOnDisable()で行動をリセット
     }
 }

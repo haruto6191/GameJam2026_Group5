@@ -26,6 +26,10 @@ public class Exp_player_status : MonoBehaviour
     [SerializeField] private GameObject gameOverCanvas;//ゲームオーバー演出用のCanvas
     [SerializeField] private GameObject mainCanvas;//メインのUIを表示するCanvas
 
+    [SerializeField] private GameObject mainCamera;
+    private Vector3 mainCamera_pos, in_da_pos;
+    private bool da_camera = false;
+
     private GameObject[] broke_obj;
 
     private Transform player;
@@ -37,8 +41,6 @@ public class Exp_player_status : MonoBehaviour
 
     void Start()
     {
-        //player_HP = UI_General.instance.manager.player_HP;
-
         player_maxHP = player_HP;
 
         HP_slider.maxValue = player_maxHP;
@@ -53,6 +55,16 @@ public class Exp_player_status : MonoBehaviour
         Fade_obj.GetComponent<Image>().color = new Color(0, 0, 0, 0);
 
         broke_obj = GameObject.FindGameObjectsWithTag("BrokeObj");
+
+        mainCamera_pos = mainCamera.transform.position;
+    }
+
+    private void Update()
+    {
+        if (da_camera)
+        {
+            mainCamera.transform.position = in_da_pos;
+        }
     }
 
     [ContextMenu("倒れる")]
@@ -96,6 +108,13 @@ public class Exp_player_status : MonoBehaviour
         for (int i = 0; i < broke_obj.Length; i++)
             broke_obj[i].SetActive(true);
 
+        if (da_camera)
+        {
+            da_camera = false;
+
+            mainCamera.transform.position = mainCamera_pos;
+        }
+
         return (UI_General.instance.life <= 0) ? 0 : 1;
     }
 
@@ -105,23 +124,34 @@ public class Exp_player_status : MonoBehaviour
         {
             TakeDamage(20);
         }
-    }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "DeathArea" && !isDead)
+        if (collider2D.gameObject.tag == "DeathArea" && !isDead)
         {
             isDead = true;
-            StartCoroutine(Death_Direction());
+
+            in_da_pos = mainCamera.transform.position;
+            da_camera = true;
+
+            StartCoroutine(DeathAreaLimited());
         }
+    }
+
+    IEnumerator DeathAreaLimited()
+    {
+        yield return new WaitForSecondsRealtime(1.0f);
+
+        StartCoroutine(Death_Direction());
     }
 
     IEnumerator Death_Direction() //死亡演出
     {
         //Debug.Log("死亡演出開始前");
-        S_PlayerAnimSystem.instance.FallenDownAnim();
+        if (!da_camera)
+        {
+            S_PlayerAnimSystem.instance.FallenDownAnim();
 
-        yield return new WaitForSecondsRealtime(2.0f);
+            yield return new WaitForSecondsRealtime(1.0f);
+        }
 
         Time.timeScale = 0;
 
