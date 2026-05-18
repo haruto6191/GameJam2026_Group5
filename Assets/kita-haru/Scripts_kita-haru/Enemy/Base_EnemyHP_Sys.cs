@@ -8,16 +8,20 @@ public class Base_EnemyHP_Sys : MonoBehaviour
 
     [SerializeField] Canvas EnemyHPGauge;
     [SerializeField] Slider Common_slider;
-    private Slider HP_slider;
+    public Slider HP_slider;
     private RectTransform HP_rectTransform;
 
     [SerializeField] Vector3 Offset;
+
+    private int GetScores;
 
     private Vector2 initial_pos;
 
     void Start()
     {
         initial_pos = transform.position;
+        GetScores = Enemy_HP * 3;
+
         EnemyHPGauge = GameObject.Find("EnemyHPGauge").gameObject.GetComponent<Canvas>();
         Common_slider = GameObject.Find("EnemySlider").gameObject.GetComponent<Slider>();
 
@@ -58,6 +62,8 @@ public class Base_EnemyHP_Sys : MonoBehaviour
 
         if (Enemy_HP <= 0)
         {
+            UI_General.instance.GetScore(GetScores);
+
             gameObject.SetActive(false);
         }
     }

@@ -9,6 +9,7 @@ public class S_CoinControler : MonoBehaviour
     [SerializeField] private ParticleSystem effec;
     [SerializeField] private bool isExtraCoin;
     [SerializeField] private GameObject coinObj;
+    [SerializeField] private int ExtraCoinNo = 0;
     private bool isGet;
 
     private Exp_player_status stat;
@@ -31,7 +32,7 @@ public class S_CoinControler : MonoBehaviour
             ui.GetCoin(1);
         else if(!isGet)
         {
-            ui.GetExCoin(1);
+            ui.GetExCoin(ExtraCoinNo);
         }
 
         if (collision.CompareTag("Player") && !isGet)

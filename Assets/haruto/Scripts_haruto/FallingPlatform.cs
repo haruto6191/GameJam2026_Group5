@@ -15,12 +15,18 @@ public class FallingPlatform : MonoBehaviour
     private Quaternion initialRotation; // 初期の回転
     private bool isFalling = false;
 
+    private SpriteRenderer spriteRenderer;
+    private Collider2D collider2D_w;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         // 復活させるために初期位置を記憶
         initialPosition = transform.position;
         initialRotation = transform.rotation;
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        collider2D_w = GetComponent<Collider2D>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -56,14 +62,15 @@ public class FallingPlatform : MonoBehaviour
             yield return null;
         }
         transform.position = pos; // 位置を戻してから落とす
-        yield return new WaitForSeconds(fallDelay);
+        yield return new WaitForSeconds(fallDelay / 2);
 
         // 2. 物理演算を有効にして落下させる
         rb.bodyType = RigidbodyType2D.Dynamic;
 
         // 3. 一定時間後にオブジェクトを非表示にする
         yield return new WaitForSeconds(destroyDelay);
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        On_Off(false);
 
         // 4. 復活処理
         yield return new WaitForSeconds(respawnDelay);
@@ -73,12 +80,20 @@ public class FallingPlatform : MonoBehaviour
     //床を復活させない場合は以下の関数を消してください
     private void ResetPlatform()
     {
-        gameObject.SetActive(true);
+        //gameObject.SetActive(true);
+        On_Off(true);
+
         isFalling = false;
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
         transform.position = initialPosition;
         transform.rotation = initialRotation;
+    }
+
+    void On_Off(bool sw)
+    {
+        spriteRenderer.enabled = sw;
+        collider2D_w.enabled = sw;
     }
 }

@@ -160,8 +160,11 @@ public class Exp_player_status : MonoBehaviour
             Time.timeScale = 1;
             player.position = Respawn_pos;
             UI_General.instance.game_time = 300;
-            UI_General.instance.exCoin = 0;
-            UI_General.instance.GetExCoin(0);
+
+            UI_General.instance.ExCoinReset();
+            //UI_General.instance.exCoin = 0;
+            //UI_General.instance.GetExCoin(0);
+
             isDead = false;
 
         }

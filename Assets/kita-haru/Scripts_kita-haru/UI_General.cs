@@ -10,8 +10,13 @@ public class UI_General : MonoBehaviour
     public int score = 0, coin = 0, life = 3, exCoin = 0;
     public float game_time = 300;
 
+    private bool time_up = false;
+
     [SerializeField]
-    Text score_text, coin_text, life_text, time_text,exCoin_text;
+    Text score_text, coin_text, life_text, time_text;//,exCoin_text;
+
+    [SerializeField]
+    GameObject[] ExCoin_obj;
 
     public void Awake()
     {
@@ -29,13 +34,13 @@ public class UI_General : MonoBehaviour
 
     private void Start()
     {
-        exCoin = 0;
-
         //èâä˙ílîΩâf
         GetScore(0);
         GetCoin(0);
         GetLife(0);
-        GetExCoin(0);
+
+        //GetExCoin(0);
+
         time_text.text = game_time.ToString("F0");
     }
 
@@ -44,14 +49,19 @@ public class UI_General : MonoBehaviour
         //timeå∏éZ
         game_time -= Time.deltaTime;
 
-        if(game_time <= 0) //Ç‡ÇµtimeÇ™0à»â∫Ç…Ç»Ç¡ÇΩÇÁ
+        if (!time_up)
         {
-            //time up -> game over
-        }
-        else //É}ÉCÉiÉXï\ãLñhé~
-        {
-            //time_textÇ…îΩâf
-            time_text.text = game_time.ToString("F0");
+            if (game_time <= 0) //Ç‡ÇµtimeÇ™0à»â∫Ç…Ç»Ç¡ÇΩÇÁ
+            {
+                time_up = true;
+                life = 1;
+                Exp_player_status.instance.Death();
+            }
+            else //É}ÉCÉiÉXï\ãLñhé~
+            {
+                //time_textÇ…îΩâf
+                time_text.text = game_time.ToString("F0");
+            }
         }
     }
 
@@ -102,8 +112,15 @@ public class UI_General : MonoBehaviour
 
     public void GetExCoin(int i)//exCoinälìæ
     {
-        exCoin += i;
-        exCoin_text.text = exCoin.ToString() + "/3";//exCoin_textÇ…îΩâf
+        exCoin++;
+        //exCoin_text.text = exCoin.ToString() + "/3";//exCoin_textÇ…îΩâf
+        ExCoin_obj[i].SetActive(true);
+    }
+
+    public void ExCoinReset()
+    {
+        exCoin = 0;
+        for (int i = 0; i < 3; i++) ExCoin_obj[i].SetActive(false);
     }
 
     public void Retry()//ÉäÉgÉâÉC
@@ -112,12 +129,15 @@ public class UI_General : MonoBehaviour
         score = 0;
         life = 3;
         game_time = 300;
-        exCoin = 0;
 
-        GetScore(score);
-        GetCoin(coin);
-        GetLife(life);
-        GetExCoin(0);
+        GetScore(0);
+        GetCoin(0);
+        GetLife(0);
+
+        ExCoinReset();
+
+        //GetExCoin(0);
+
         time_text.text = game_time.ToString("F0");
     }
 }

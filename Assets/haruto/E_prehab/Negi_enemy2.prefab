@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 316793085882089727}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.600001, y: -0.21000004, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -194,7 +194,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7039447022534019175
 Transform:
   m_ObjectHideFlags: 0
@@ -405,4 +405,5 @@ MonoBehaviour:
   Enemy_HP: 50
   EnemyHPGauge: {fileID: 0}
   Common_slider: {fileID: 0}
+  HP_slider: {fileID: 0}
   Offset: {x: 0, y: 1, z: 0}

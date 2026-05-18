@@ -16,6 +16,8 @@ public class surprise_attack : MonoBehaviour
 
     private bool fiarst = false;
 
+    private Base_EnemyHP_Sys sys;
+
     private Rigidbody2D rb;
 
     void Start()
@@ -29,6 +31,13 @@ public class surprise_attack : MonoBehaviour
         spriteRenderer.color = color;
 
         //Physics2D.IgnoreCollision(GetComponent<Collider2D>(), p_transform.gameObject.GetComponent<Collider2D>(), true); //è’ìÀÇµÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
+
+        sys = GetComponent<Base_EnemyHP_Sys>();
+        if(sys != null)
+        {
+            sys.enabled = false;
+            sys.HP_slider.gameObject.SetActive(false);
+        }
 
         rb = GetComponent<Rigidbody2D>();
     }
@@ -44,6 +53,12 @@ public class surprise_attack : MonoBehaviour
 
             color.a = 1;
             spriteRenderer.color = color;
+
+            if (sys != null)
+            {
+                sys.HP_slider.gameObject.SetActive(true);
+                sys.enabled = true;
+            }
         }
 
         if (attack)
@@ -71,5 +86,11 @@ public class surprise_attack : MonoBehaviour
 
         color.a = 0;
         spriteRenderer.color = color;
+
+        if (sys != null)
+        {
+            sys.enabled = false;
+            if(sys.HP_slider != null) sys.HP_slider.gameObject.SetActive(false);
+        }
     }
 }

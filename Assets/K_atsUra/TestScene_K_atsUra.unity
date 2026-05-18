@@ -3030,6 +3030,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6352885951325657830, guid: 4e30c99aacd53d044aabd46080e31ba8, type: 3}
+      propertyPath: ExtraCoinNo
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6961545448498837915, guid: 4e30c99aacd53d044aabd46080e31ba8, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -3316,6 +3320,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -6.1
       objectReference: {fileID: 0}
+    - target: {fileID: 2717789951506189355, guid: b82bf3d93e2fdc6468546697bcb0336e, type: 3}
+      propertyPath: EnemyHPGauge
+      value: 
+      objectReference: {fileID: 1465290809}
+    - target: {fileID: 2717789951506189355, guid: b82bf3d93e2fdc6468546697bcb0336e, type: 3}
+      propertyPath: Common_slider
+      value: 
+      objectReference: {fileID: 1307302760}
     - target: {fileID: 3853156851154802147, guid: b82bf3d93e2fdc6468546697bcb0336e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 369.2
@@ -4500,21 +4512,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1139848528}
     m_Modifications:
-    - target: {fileID: 398818680139416804, guid: b82bf3d93e2fdc6468546697bcb0336e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 13.08
-      objectReference: {fileID: 0}
-    - target: {fileID: 398818680139416804, guid: b82bf3d93e2fdc6468546697bcb0336e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.1
-      objectReference: {fileID: 0}
+    - target: {fileID: 2717789951506189355, guid: b82bf3d93e2fdc6468546697bcb0336e, type: 3}
+      propertyPath: EnemyHPGauge
+      value: 
+      objectReference: {fileID: 1465290809}
+    - target: {fileID: 2717789951506189355, guid: b82bf3d93e2fdc6468546697bcb0336e, type: 3}
+      propertyPath: Common_slider
+      value: 
+      objectReference: {fileID: 1307302760}
     - target: {fileID: 3853156851154802147, guid: b82bf3d93e2fdc6468546697bcb0336e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 278.4
+      value: 292.3
       objectReference: {fileID: 0}
     - target: {fileID: 3853156851154802147, guid: b82bf3d93e2fdc6468546697bcb0336e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.8
+      value: -5.8
       objectReference: {fileID: 0}
     - target: {fileID: 3853156851154802147, guid: b82bf3d93e2fdc6468546697bcb0336e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4551,10 +4563,6 @@ PrefabInstance:
     - target: {fileID: 5838803869125307830, guid: b82bf3d93e2fdc6468546697bcb0336e, type: 3}
       propertyPath: m_Name
       value: Negi_enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 5838803869125307830, guid: b82bf3d93e2fdc6468546697bcb0336e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7467,7 +7475,7 @@ PrefabInstance:
       objectReference: {fileID: 543565157}
     - target: {fileID: 5782414081583529328, guid: e50614004b4535e459649d9e9fe56f90, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -24.09
+      value: -23
       objectReference: {fileID: 0}
     - target: {fileID: 5782414081583529328, guid: e50614004b4535e459649d9e9fe56f90, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7573,6 +7581,10 @@ PrefabInstance:
     - target: {fileID: 4614639908308243658, guid: 4e30c99aacd53d044aabd46080e31ba8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6352885951325657830, guid: 4e30c99aacd53d044aabd46080e31ba8, type: 3}
+      propertyPath: ExtraCoinNo
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6961545448498837915, guid: 4e30c99aacd53d044aabd46080e31ba8, type: 3}
       propertyPath: m_Mesh
@@ -10081,14 +10093,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1139848528}
     m_Modifications:
-    - target: {fileID: 806844531029475720, guid: e0456e712cd7d6f498e36c9947290792, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -9.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 806844531029475720, guid: e0456e712cd7d6f498e36c9947290792, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.48
-      objectReference: {fileID: 0}
     - target: {fileID: 3378561290913622123, guid: e0456e712cd7d6f498e36c9947290792, type: 3}
       propertyPath: EnemyHPGauge
       value: 

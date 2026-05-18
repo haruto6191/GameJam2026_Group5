@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 896251364924666444}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 11.9515, y: 2.4143, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -276,6 +276,7 @@ MonoBehaviour:
   Enemy_HP: 120
   EnemyHPGauge: {fileID: 0}
   Common_slider: {fileID: 0}
+  HP_slider: {fileID: 0}
   Offset: {x: 0, y: 1.5, z: 0}
 --- !u!114 &5129332877038071845
 MonoBehaviour:
@@ -294,5 +295,5 @@ MonoBehaviour:
   tracking_time: 100
   self_destruction: 1
   explosion_time: 10
-  explosion_size: 10
+  explosion_size: 5
   explosion_effect: {fileID: 2064427829750636546, guid: 3d904a12003872b429526d7b6adf5095, type: 3}
