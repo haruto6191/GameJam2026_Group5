@@ -646,6 +646,7 @@ GameObject:
   - component: {fileID: 281934795}
   - component: {fileID: 281934794}
   - component: {fileID: 281934793}
+  - component: {fileID: 281934797}
   m_Layer: 5
   m_Name: Stage2
   m_TagString: Untagged
@@ -739,7 +740,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 281934795}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 281934797}
+        m_TargetAssemblyTypeName: TitleButtonSystem, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &281934795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -778,6 +791,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 281934791}
   m_CullTransparentMesh: 1
+--- !u!114 &281934797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281934791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83088e091e6747c4d95db952f801d23c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TitleButtonSystem
+  sceneName: TestScene_Negi
 --- !u!1 &349467841
 GameObject:
   m_ObjectHideFlags: 0
@@ -1267,7 +1293,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 470288237}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 470288239}
+        m_TargetAssemblyTypeName: TitleButtonSystem, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &470288237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1318,7 +1356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83088e091e6747c4d95db952f801d23c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TitleButtonSystem
-  sceneName: 
+  sceneName: TestScene_K_atsUra
 --- !u!1 &572320821
 GameObject:
   m_ObjectHideFlags: 0
@@ -2188,6 +2226,7 @@ GameObject:
   - component: {fileID: 1128679935}
   - component: {fileID: 1128679934}
   - component: {fileID: 1128679933}
+  - component: {fileID: 1128679937}
   m_Layer: 5
   m_Name: Stage5
   m_TagString: Untagged
@@ -2281,7 +2320,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1128679935}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1128679937}
+        m_TargetAssemblyTypeName: TitleButtonSystem, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1128679935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2320,6 +2371,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1128679931}
   m_CullTransparentMesh: 1
+--- !u!114 &1128679937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1128679931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83088e091e6747c4d95db952f801d23c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TitleButtonSystem
+  sceneName: TestScene_Syuo2
 --- !u!1 &1269826666
 GameObject:
   m_ObjectHideFlags: 0
@@ -2700,6 +2764,7 @@ GameObject:
   - component: {fileID: 1407483431}
   - component: {fileID: 1407483430}
   - component: {fileID: 1407483429}
+  - component: {fileID: 1407483433}
   m_Layer: 5
   m_Name: Stage4
   m_TagString: Untagged
@@ -2793,7 +2858,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1407483431}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1407483433}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1407483431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2832,6 +2909,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1407483427}
   m_CullTransparentMesh: 1
+--- !u!114 &1407483433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407483427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83088e091e6747c4d95db952f801d23c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TitleButtonSystem
+  sceneName: TestScene_Kuro
 --- !u!1 &1451258128
 GameObject:
   m_ObjectHideFlags: 0
@@ -3002,6 +3092,7 @@ GameObject:
   - component: {fileID: 1503277372}
   - component: {fileID: 1503277371}
   - component: {fileID: 1503277370}
+  - component: {fileID: 1503277374}
   m_Layer: 5
   m_Name: Stage3
   m_TagString: Untagged
@@ -3095,7 +3186,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1503277372}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1503277374}
+        m_TargetAssemblyTypeName: TitleButtonSystem, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1503277372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3134,6 +3237,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1503277368}
   m_CullTransparentMesh: 1
+--- !u!114 &1503277374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503277368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83088e091e6747c4d95db952f801d23c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TitleButtonSystem
+  sceneName: TestScene_KadokuraSoma
 --- !u!1 &1646623986
 GameObject:
   m_ObjectHideFlags: 0

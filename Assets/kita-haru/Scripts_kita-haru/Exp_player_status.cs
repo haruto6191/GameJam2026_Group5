@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Exp_player_status : MonoBehaviour
@@ -25,6 +26,8 @@ public class Exp_player_status : MonoBehaviour
     [SerializeField] private GameObject gameOverCanvas;//ゲームオーバー演出用のCanvas
     [SerializeField] private GameObject mainCanvas;//メインのUIを表示するCanvas
 
+    private GameObject[] broke_obj;
+
     private Transform player;
 
     public void Awake()
@@ -48,6 +51,8 @@ public class Exp_player_status : MonoBehaviour
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
         Fade_obj.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+
+        broke_obj = GameObject.FindGameObjectsWithTag("BrokeObj");
     }
 
     [ContextMenu("倒れる")]
@@ -86,6 +91,10 @@ public class Exp_player_status : MonoBehaviour
         GameObject[] ene = GameObject.FindGameObjectsWithTag("Enemy");
         for(int i = 0; i < ene.Length; i++)
             ene[i].SetActive(false);
+
+        //ステージ上のギミックをリセット
+        for (int i = 0; i < broke_obj.Length; i++)
+            broke_obj[i].SetActive(true);
 
         return (UI_General.instance.life <= 0) ? 0 : 1;
     }
@@ -167,12 +176,12 @@ public class Exp_player_status : MonoBehaviour
         }
 
         Fade_obj.SetActive(false);
-        
-
     }
 
     public void Retry()
     {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        /*
         Debug.Log("リトライ");
         isDead = false;
         isGameOver = false;
@@ -189,6 +198,6 @@ public class Exp_player_status : MonoBehaviour
 
         UI_General.instance.Retry();
         S_PlayerAnimSystem.instance.GameStartAnim();
-
+        */
     }
 }

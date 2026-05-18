@@ -7,7 +7,8 @@ public class DestructibleObject : MonoBehaviour
     
         if (other.CompareTag("PlayerAttack"))//このタグはまだ追加してない（仮）
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

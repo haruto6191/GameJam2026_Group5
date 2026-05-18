@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 5706882847389157547}
   - component: {fileID: 2245720616906400165}
   - component: {fileID: 7767868401582079269}
+  - component: {fileID: 2346601425758276446}
   m_Layer: 0
   m_Name: Goal
   m_TagString: Untagged
@@ -170,3 +171,16 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 4.140413, y: 5.7787933}
   m_EdgeRadius: 0
+--- !u!114 &2346601425758276446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9088152126411207161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6836dbbe6ed3e9843a6581b96f9f1de0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Scene_loader
+  Game_Clear: {fileID: 0}

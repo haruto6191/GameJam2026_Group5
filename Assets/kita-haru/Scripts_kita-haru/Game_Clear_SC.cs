@@ -5,13 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class Game_Clear_SC : MonoBehaviour
 {
-    [SerializeField] GameObject Hidden_Can, GC_text, GC_Can, title_bt;
+    [SerializeField] GameObject GC_text, GC_Can, title_bt;
     [SerializeField] Text sc_text, plus_ef, plus_txt;
 
     [SerializeField] int Increase;
 
-    private string[] general_str = {"TIME","COIN","LIFE"};
-    private int[] general_data = new int[3];
+    private string[] general_str = {"Time","Coin", "ExCoin", "Life" };
+    private int[] general_data = new int[4];
 
     public void GameClear()
     {
@@ -20,7 +20,8 @@ public class Game_Clear_SC : MonoBehaviour
         //for文で回しやすくするため、配列にそれぞれの値を格納
         general_data[0] = (int)UI_General.instance.game_time * 10;
         general_data[1] = UI_General.instance.coin * 10;
-        general_data[2] = UI_General.instance.life * 1000;
+        general_data[2] = UI_General.instance.exCoin * 500;
+        general_data[3] = UI_General.instance.life * 1000;
 
         //以下のコルーチンスタート
         StartCoroutine(GameClearCoroutine());
@@ -30,8 +31,6 @@ public class Game_Clear_SC : MonoBehaviour
     {
         //GameClearのキャンバスを表示
         GC_Can.SetActive(true);
-        //Canvasを非表示に
-        Hidden_Can.SetActive(false);
 
         yield return new WaitForSecondsRealtime(0.5f);
         //以下はまあ、テキストの演出を適当に組んだだけだから気にせずに
@@ -44,7 +43,7 @@ public class Game_Clear_SC : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(1.0f);
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 4; i++)
         {
             plus_ef.gameObject.SetActive(true);
 
@@ -55,12 +54,17 @@ public class Game_Clear_SC : MonoBehaviour
 
 
             int k = UI_General.instance.score;
+            float delay = 0.01f;
+
             UI_General.instance.score += general_data[i];
             while (k < UI_General.instance.score)
             {
                 k += Increase;
                 sc_text.text = k.ToString("D6");
-                yield return new WaitForSecondsRealtime(0.01f);
+
+                if (Input.GetMouseButtonDown(0)) delay = 0;
+
+                yield return new WaitForSecondsRealtime(delay);
             }
 
             plus_ef.gameObject.SetActive(false);
@@ -74,10 +78,8 @@ public class Game_Clear_SC : MonoBehaviour
     //タイトルシーンに行くやーつ
     public void GotoTitle()
     {
-        /*
         Time.timeScale = 1.0f;
 
-        SceneManager.LoadScene("Title_Scene");
-        */
+        SceneManager.LoadScene("TitleScene");
     }
 }

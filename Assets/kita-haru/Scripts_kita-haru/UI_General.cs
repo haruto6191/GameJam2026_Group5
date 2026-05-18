@@ -32,9 +32,9 @@ public class UI_General : MonoBehaviour
         exCoin = 0;
 
         //èâä˙ílîΩâf
-        GetScore(score);
-        GetCoin(coin);
-        GetLife(life);
+        GetScore(0);
+        GetCoin(0);
+        GetLife(0);
         GetExCoin(0);
         time_text.text = game_time.ToString("F0");
     }

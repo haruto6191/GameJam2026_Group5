@@ -41,6 +41,9 @@ public class Base_EnemyHP_Sys : MonoBehaviour
     {
         if (HP_rectTransform != null)
             HP_rectTransform.position = transform.position + Offset;
+
+        if(Vector3.Distance(transform.position, initial_pos) > 100)
+            gameObject.SetActive(false);
     }
 
     public void TakeDamage(int damage)

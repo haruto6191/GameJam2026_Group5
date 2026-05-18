@@ -1,13 +1,12 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Scene_loader : MonoBehaviour
 {
-    public string sceneName;
+    [SerializeField] Game_Clear_SC Game_Clear;
 
-    public bool Reset_Restart;
+    //public bool Reset_Restart;
 
-    public Score_Manager manager;
+    //public Score_Manager manager;
 
     void FixedUpdate()
     {
@@ -20,9 +19,10 @@ public class Scene_loader : MonoBehaviour
 
     public void LoadScene()
     {
-        SceneManager.LoadScene(sceneName);
+        Game_Clear.GameClear();
+        //SceneManager.LoadScene(sceneName);
     }
-
+    /*
     public void DataAdd()
     {
         if (Reset_Restart)
@@ -45,13 +45,14 @@ public class Scene_loader : MonoBehaviour
         }
         LoadScene();
     }
-
+    */
     //プレイヤーがこれをアタッチしたオブジェクトに触れた瞬間
     void OnTriggerEnter2D(Collider2D collider2D)
     {
         if (collider2D.gameObject.tag == "Player")
         {
-            DataAdd();
+            //DataAdd();
+            LoadScene();
         }
     }
 }
